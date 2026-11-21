@@ -180,7 +180,13 @@ export function drawWorld(ctx, world, ui) {
     ctx.fillStyle = '#c9a8ff';
     ctx.beginPath(); ctx.arc(px, py, 4, 0, 7); ctx.fill();
     ctx.strokeStyle = 'rgba(220,200,255,0.7)';
-    ctx.beginPath(); ctx.moveTo(px - 13, py - 13); ctx.lineTo(px + 13, py + 13); ctx.moveTo(px + 13, py - 13); ctx.lineTo(px - 13, py + 13); ctx.stroke();
+    const spin = world.time * 9 + px;
+    ctx.beginPath();
+    for (const s of [0, Math.PI / 2]) {
+      ctx.moveTo(px - Math.cos(spin + s) * 13, py - Math.sin(spin + s) * 13);
+      ctx.lineTo(px + Math.cos(spin + s) * 13, py + Math.sin(spin + s) * 13);
+    }
+    ctx.stroke();
   }
   for (const g of world.guards) {
     drawFigure(ctx, g.x, g.y, g.face, '#b8452e', '#f2d8a0');
